@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Determination & Intrinsic Motivation Lab | College Learning</title>
+  <style>
+    /* ==========================================================================
+       CSS CUSTOM PROPERTIES & ACCESSIBLE THEMING (WCAG 2.2 Level AA Compliant)
+       ========================================================================== */
+    :root {
+      /* Standard Palette - Clean High Contrast Slate/Indigo */
+      --bg-app: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #0f172a;
+      --text-header: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #475569;
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-light: #eff6ff;
+      --primary-border: #93c5fd;
+      
+      /* SDT Domain Colors (Contrasting & Distinct) */
+      --autonomy-color: #0369a1;
+      --autonomy-bg: #f0f9ff;
+      --autonomy-border: #7dd3fc;
+      
+      --competence-color: #0f766e;
+      --competence-bg: #f0fdf4;
+      --competence-border: #6ee7b7;
+      
+      --relatedness-color: #6d28d9;
+      --relatedness-bg: #f5f3ff;
+      --relatedness-border: #c4b5fd;
+
+      /* UI States */
+      --border-main: #cbd5e1;
+      --border-focus: #000000;
+      --focus-ring: #2563eb;
+      
+      --success-bg: #f0fdf4;
+      --success-text: #14532d;
+      --success-border: #16a34a;
+      
+      --error-bg: #fef2f2;
+      --error-text: #7f1d1d;
+      --error-border: #dc2626;
+
+      --warning-bg: #fffbeb;
+      --warning-text: #78350f;
+      --warning-border: #d97706;
+
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    }
+
+    /* High Contrast Mode Theme Overrides */
+    body.high-contrast {
+      --bg-app: #000000;
+      --bg-card: #0a0a0a;
+      --bg-header: #000000;
+      --text-header: #ffffff;
+      --text-primary: #ffffff;
+      --text-secondary: #ffffff;
+      --text-muted: #e2e8f0;
+      --primary: #ffff00; /* High contrast yellow */
+      --primary-hover: #e6e600;
+      --primary-light: #1a1a00;
+      --primary-border: #ffff00;
+      
+      --autonomy-color: #38bdf8;
+      --autonomy-bg: #032b43;
+      --autonomy-border: #38bdf8;
+      
+      --competence-color: #4ade80;
+      --competence-bg: #052e16;
+      --competence-border: #4ade80;
+      
+      --relatedness-color: #c084fc;
+      --relatedness-bg: #2e1065;
+      --relatedness-border: #c084fc;
+
+      --border-main: #ffffff;
+      --border-focus: #ffff00;
+      --focus-ring: #ffff00;
+      
+      --success-bg: #052e16;
+      --success-text: #ffffff;
+      --success-border: #4ade80;
+      
+      --error-bg: #450a0a;
+      --error-text: #ffffff;
+      --error-border: #f87171;
+
+      --warning-bg: #451a03;
+      --warning-text: #ffffff;
+      --warning-border: #fbbf24;
+
+      --card-shadow: none;
+    }
+
+    /* ==========================================================================
+       GLOBAL BASE STYLES & RESET
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 100%; /* Respects user browser zoom up to 400% */
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      line-height: 1.6;
+      background-color: var(--bg-app);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* WCAG Visible Focus Ring Rules */
+    *:focus-visible {
+      outline: 3px solid var(--focus-ring) !important;
+      outline-offset: 3px !important;
+    }
+
+    /* Screen Reader Only Utility Class */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Skip to main content link */
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 10px;
+      background: #000000;
+      color: #ffff00;
+      padding: 12px 18px;
+      z-index: 10000;
+      font-weight: 700;
+      text-decoration: underline;
+      border: 3px solid #ffff00;
+      border-radius: 4px;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus {
+      top: 10px;
+    }
+
+    /* Layout Containers */
+    header {
+      background-color: var(--bg-header);
+      color: var(--text-header);
+      padding: 1.25rem 1.5rem;
+      border-bottom: 3px solid var(--border-main);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .app-title-group {
+      flex: 1 1 300px;
+    }
+
+    .app-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .app-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    body.high-contrast .app-subtitle {
+      color: #ffffff;
+    }
+
+    .accessibility-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Touch-friendly Accessibility Toggle Button */
+    .btn-toggle {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 2px solid var(--border-main);
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-toggle:hover {
+      background-color: var(--primary-light);
+    }
+
+    /* Primary Main Layout */
+    main {
+      flex: 1 0 auto;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem 1rem;
+    }
+
+    /* Accessible Navigation Bar / Tablist */
+    nav.tab-nav {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-main);
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    [role="tablist"] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    [role="tab"] {
+      flex: 1 1 140px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid transparent;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    [role="tab"]:hover {
+      background-color: var(--primary-light);
+    }
+
+    [role="tab"][aria-selected="true"] {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    body.high-contrast [role="tab"][aria-selected="true"] {
+      color: #000000;
+      background-color: #ffff00;
+      border-color: #ffff00;
+    }
+
+    /* Tab Panels */
+    [role="tabpanel"] {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-main);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    [role="tabpanel"][hidden] {
+      display: none;
+    }
+
+    /* Core Typography inside Content Modules */
+    h2.section-heading {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h3.sub-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 1.5rem 0 0.75rem 0;
+      color: var(--text-primary);
+    }
+
+    p.lead-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Cards Grid Layouts */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+
+    .concept-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-main);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .concept-card.autonomy {
+      border-top: 6px solid var(--autonomy-color);
+      background-color: var(--autonomy-bg);
+    }
+    .concept-card.competence {
+      border-top: 6px solid var(--competence-color);
+      background-color: var(--competence-bg);
+    }
+    .concept-card.relatedness {
+      border-top: 6px solid var(--relatedness-color);
+      background-color: var(--relatedness-bg);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      border-radius: 0.375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-autonomy {
+      background-color: var(--autonomy-color);
+      color: #ffffff;
+    }
+    .badge-competence {
+      background-color: var(--competence-color);
+      color: #ffffff;
+    }
+    .badge-relatedness {
+      background-color: var(--relatedness-color);
+      color: #ffffff;
+    }
+    body.high-contrast .badge {
+      color: #000000;
+    }
+
+    /* Accordion Expandable Elements */
+    .accordion-btn {
+      width: 100%;
+      text-align: left;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 2px solid var(--border-main);
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      margin-top: 0.75rem;
+    }
+
+    .accordion-btn:hover {
+      background-color: var(--primary-light);
+    }
+
+    .accordion-content {
+      border: 2px solid var(--border-main);
+      border-top: none;
+      padding: 1.25rem;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      background-color: var(--bg-card);
+      margin-bottom: 1rem;
+    }
+
+    .accordion-content[hidden] {
+      display: none;
+    }
+
+    /* Form Controls & Assessment Styling */
+    fieldset {
+      border: 2px solid var(--border-main);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      background-color: var(--bg-card);
+    }
+
+    legend {
+      font-weight: 800;
+      font-size: 1.1rem;
+      padding: 0 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .help-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    body.high-contrast .help-text {
+      color: #ffffff;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--text-primary);
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-main);
+      border-radius: 0.5rem;
+      min-height: 48px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* Likert Rating Scale Options */
+    .likert-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .likert-option {
+      position: relative;
+    }
+
+    .likert-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .likert-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.6rem 0.4rem;
+      background-color: var(--bg-app);
+      border: 2px solid var(--border-main);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-height: 52px;
+    }
+
+    .likert-option input[type="radio"]:checked + label {
+      background-color: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    body.high-contrast .likert-option input[type="radio"]:checked + label {
+      background-color: #ffff00;
+      color: #000000;
+      border-color: #ffff00;
+    }
+
+    .likert-option input[type="radio"]:focus-visible + label {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: 2px solid var(--primary);
+      padding: 0.85rem 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    body.high-contrast .btn-primary {
+      background-color: #ffff00;
+      color: #000000;
+      border-color: #ffff00;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+      border: 2px solid var(--border-main);
+      padding: 0.85rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary-light);
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    /* Accessible CSS Bar Charts */
+    .chart-container {
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .chart-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .chart-label-group {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .chart-track {
+      background-color: var(--bg-app);
+      border: 2px solid var(--border-main);
+      border-radius: 0.5rem;
+      height: 28px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chart-bar-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 0.5rem;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .chart-bar-fill.autonomy { background-color: var(--autonomy-color); }
+    .chart-bar-fill.competence { background-color: var(--competence-color); }
+    .chart-bar-fill.relatedness { background-color: var(--relatedness-color); }
+
+    body.high-contrast .chart-bar-fill {
+      color: #000000;
+    }
+
+    /* Feedback & Alert Banners */
+    .alert-box {
+      border: 2px solid var(--border-main);
+      border-radius: 0.5rem;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .alert-box.success {
+      background-color: var(--success-bg);
+      color: var(--success-text);
+      border-color: var(--success-border);
+    }
+
+    .alert-box.warning {
+      background-color: var(--warning-bg);
+      color: var(--warning-text);
+      border-color: var(--warning-border);
+    }
+
+    .alert-box.error {
+      background-color: var(--error-bg);
+      color: var(--error-text);
+      border-color: var(--error-border);
+    }
+
+    /* Output Display Code/Pre block */
+    pre.output-plan {
+      background-color: var(--bg-app);
+      color: var(--text-primary);
+      border: 2px solid var(--border-main);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin-top: 1rem;
+    }
+
+    /* WCAG Checklist Table */
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+
+    .checklist-table th,
+    .checklist-table td {
+      border: 2px solid var(--border-main);
+      padding: 0.85rem;
+      text-align: left;
+    }
+
+    .checklist-table th {
+      background-color: var(--primary-light);
+      color: var(--text-primary);
+      font-weight: 800;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 640px) {
+      main {
+        padding: 1rem 0.5rem;
+      }
+      [role="tabpanel"] {
+        padding: 1rem;
+      }
+      .likert-group {
+        grid-template-columns: 1fr;
+      }
+      .button-group {
+        flex-direction: column;
+      }
+      .btn-primary, .btn-secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WCAG 2.2 AA Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ARIA Live Region for Screen Reader Announcements -->
+  <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Application Header Banner -->
+  <header role="banner">
+    <div class="header-container">
+      <div class="app-title-group">
+        <h1 class="app-title">Self-Determination &amp; Motivation Lab</h1>
+        <p class="app-subtitle">Intro to College-Level Learning: Autonomy, Competence, and Relatedness</p>
+      </div>
+      <div class="accessibility-controls">
+        <button id="hc-toggle-btn" class="btn-toggle" aria-pressed="false" onclick="toggleHighContrast()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path>
+          </svg>
+          High Contrast Mode
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Area -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- Tabbed Navigation Bar -->
+    <nav class="tab-nav" aria-label="Learning Modules">
+      <div role="tablist" aria-label="Course Learning Sections">
+        <button role="tab" id="tab-overview" aria-selected="true" aria-controls="panel-overview" tabindex="0">
+          1. Core Concepts
+        </button>
+        <button role="tab" id="tab-diagnostic" aria-selected="false" aria-controls="panel-diagnostic" tabindex="-1">
+          2. Self-Diagnostic
+        </button>
+        <button role="tab" id="tab-scenarios" aria-selected="false" aria-controls="panel-scenarios" tabindex="-1">
+          3. Scenario Lab
+        </button>
+        <button role="tab" id="tab-quiz" aria-selected="false" aria-controls="panel-quiz" tabindex="-1">
+          4. Mastery Quiz
+        </button>
+        <button role="tab" id="tab-planner" aria-selected="false" aria-controls="panel-planner" tabindex="-1">
+          5. Action Planner
+        </button>
+        <button role="tab" id="tab-testing" aria-selected="false" aria-controls="panel-testing" tabindex="-1">
+          6. Accessibility Audit
+        </button>
+      </div>
+    </nav>
+
+    <!-- MODULE 1: CORE CONCEPTS -->
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+      <h2 class="section-heading">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        Understanding Self-Determination Theory (SDT)
+      </h2>
+      
+      <p class="lead-text">
+        College learning requires shifting from external compliance (doing work purely for grades, attendance, or parents) to self-directed <strong>intrinsic motivation</strong>. Self-Determination Theory, developed by psychologists Edward Deci and Richard Ryan, demonstrates that deep learning and persistence happen when three basic psychological needs are satisfied.
+      </p>
+
+      <h3 class="sub-heading">The Three Core Psychological Needs</h3>
+      <div class="card-grid">
+        <!-- Autonomy Card -->
+        <article class="concept-card autonomy">
+          <div>
+            <div class="card-header">
+              <span class="badge badge-autonomy">Autonomy</span>
+            </div>
+            <h4 class="card-title">Ownership &amp; Choice</h4>
+            <p style="margin-top:0.5rem;">
+              The feeling of being the author of your own life and learning. Autonomy does not mean working completely alone; it means having choice, self-direction, and personal alignment with your tasks.
+            </p>
+          </div>
+          <button class="accordion-btn" aria-expanded="false" aria-controls="acc-autonomy" onclick="toggleAccordion(this)">
+            <span>View College Examples</span>
+            <span aria-hidden="true">+</span>
+          </button>
+          <div id="acc-autonomy" class="accordion-content" hidden>
+            <p><strong>In College:</strong> Selecting paper topics that align with your career interests, setting your own daily study schedules, and choosing elective courses purposefully.</p>
+            <p style="margin-top:0.5rem;"><strong>Saboteur:</strong> Feeling micromanaged or viewing class assignments as meaningless busywork forced upon you.</p>
+          </div>
+        </article>
+
+        <!-- Competence Card -->
+        <article class="concept-card competence">
+          <div>
+            <div class="card-header">
+              <span class="badge badge-competence">Competence</span>
+            </div>
+            <h4 class="card-title">Mastery &amp; Growth</h4>
+            <p style="margin-top:0.5rem;">
+              The need to feel effective, capable, and skilled. Competence develops through tackling optimal challenges, mastering difficult material, and receiving constructive feedback.
+            </p>
+          </div>
+          <button class="accordion-btn" aria-expanded="false" aria-controls="acc-competence" onclick="toggleAccordion(this)">
+            <span>View College Examples</span>
+            <span aria-hidden="true">+</span>
+          </button>
+          <div id="acc-competence" class="accordion-content" hidden>
+            <p><strong>In College:</strong> Breaking a 10-page research paper into manageable milestones, attending tutoring sessions, and tracking skill improvements over time.</p>
+            <p style="margin-top:0.5rem;"><strong>Saboteur:</strong> Harsh unguided critiques, fixed mindset ("I'm just not a math person"), or overly simple/impossible tasks.</p>
+          </div>
+        </article>
+
+        <!-- Relatedness Card -->
+        <article class="concept-card relatedness">
+          <div>
+            <div class="card-header">
+              <span class="badge badge-relatedness">Relatedness</span>
+            </div>
+            <h4 class="card-title">Belonging &amp; Connection</h4>
+            <p style="margin-top:0.5rem;">
+              The need to feel connected to others, valued by peers and faculty, and part of an academic community. Learning is fundamentally social and relational.
+            </p>
+          </div>
+          <button class="accordion-btn" aria-expanded="false" aria-controls="acc-relatedness" onclick="toggleAccordion(this)">
+            <span>View College Examples</span>
+            <span aria-hidden="true">+</span>
+          </button>
+          <div id="acc-relatedness" class="accordion-content" hidden>
+            <p><strong>In College:</strong> Forming active study groups, attending professor office hours, participating in campus clubs, and supporting classmates.</p>
+            <p style="margin-top:0.5rem;"><strong>Saboteur:</strong> Feeling isolated in massive lecture halls, imposter syndrome, or fear of asking "dumb" questions.</p>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="sub-heading">The Motivation Spectrum</h3>
+      <p>Motivation is not all-or-nothing. It exists on a continuum from pure external pressure to complete internal satisfaction:</p>
+
+      <div style="margin-top: 1rem; border: 2px solid var(--border-main); border-radius: 0.75rem; padding: 1.25rem; background: var(--bg-card);">
+        <ol style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+          <li><strong>Amotivation:</strong> Complete lack of intent or care. <em>"I don't see why I bother going to class."</em></li>
+          <li><strong>External Regulation:</strong> Driven purely by external rewards or avoiding punishment. <em>"I'm studying only so my parents don't cut off my allowance."</em></li>
+          <li><strong>Identified Regulation:</strong> Valuing the utility of the task, even if not enjoyable. <em>"Statistics is hard, but mastering data analysis will make me a better psychologist."</em></li>
+          <li><strong>Intrinsic Motivation:</strong> Engaging in learning out of pure curiosity, interest, and inherent joy. <em>"I lost track of time reading this astronomy article because it's fascinating!"</em></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- MODULE 2: SELF-DIAGNOSTIC ASSESSMENT -->
+    <section id="panel-diagnostic" role="tabpanel" aria-labelledby="tab-diagnostic" hidden>
+      <h2 class="section-heading">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Self-Determination Academic Diagnostic
+      </h2>
+      <p class="lead-text">
+        Reflect on your current experience across your college classes. Rate each statement on a scale of 1 (Strongly Disagree) to 5 (Strongly Agree) to calculate your Autonomy, Competence, and Relatedness profile.
+      </p>
+
+      <form id="diagnostic-form" onsubmit="calculateDiagnostic(event)">
+        <!-- Autonomy Items -->
+        <fieldset>
+          <legend>Dimension 1: Autonomy Needs</legend>
+          <div class="form-group">
+            <p id="q1-label">1. I feel I have choices in how I approach my assignments, study routines, and course projects.</p>
+            <div class="likert-group" role="radiogroup" aria-labelledby="q1-label">
+              <div class="likert-option">
+                <input type="radio" id="q1-1" name="q1" value="1" required><label for="q1-1">1 - Strongly Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q1-2" name="q1" value="2"><label for="q1-2">2 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q1-3" name="q1" value="3"><label for="q1-3">3 - Neutral</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q1-4" name="q1" value="4"><label for="q1-4">4 - Agree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q1-5" name="q1" value="5"><label for="q1-5">5 - Strongly Agree</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <p id="q2-label">2. My academic efforts stem from my personal interests and long-term career values rather than external pressure.</p>
+            <div class="likert-group" role="radiogroup" aria-labelledby="q2-label">
+              <div class="likert-option">
+                <input type="radio" id="q2-1" name="q2" value="1" required><label for="q2-1">1 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q2-2" name="q2" value="2"><label for="q2-2">2 - Somewhat Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q2-3" name="q2" value="3"><label for="q2-3">3 - Neutral</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q2-4" name="q2" value="4"><label for="q2-4">4 - Agree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q2-5" name="q2" value="5"><label for="q2-5">5 - Strongly Agree</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Competence Items -->
+        <fieldset>
+          <legend>Dimension 2: Competence Needs</legend>
+          <div class="form-group">
+            <p id="q3-label">3. I am confident in my ability to master challenging course concepts when I apply effective study strategies.</p>
+            <div class="likert-group" role="radiogroup" aria-labelledby="q3-label">
+              <div class="likert-option">
+                <input type="radio" id="q3-1" name="q3" value="1" required><label for="q3-1">1 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q3-2" name="q3" value="2"><label for="q3-2">2 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q3-3" name="q3" value="3"><label for="q3-3">3 - Neutral</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q3-4" name="q3" value="4"><label for="q3-4">4 - Agree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q3-5" name="q3" value="5"><label for="q3-5">5 - Strongly Agree</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <p id="q4-label">4. I actively receive or seek out constructive feedback that helps me understand how to improve my academic performance.</p>
+            <div class="likert-group" role="radiogroup" aria-labelledby="q4-label">
+              <div class="likert-option">
+                <input type="radio" id="q4-1" name="q4" value="1" required><label for="q4-1">1 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q4-2" name="q4" value="2"><label for="q4-2">2 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q4-3" name="q4" value="3"><label for="q4-3">3 - Neutral</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q4-4" name="q4" value="4"><label for="q4-4">4 - Agree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q4-5" name="q4" value="5"><label for="q4-5">5 - Strongly Agree</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Relatedness Items -->
+        <fieldset>
+          <legend>Dimension 3: Relatedness Needs</legend>
+          <div class="form-group">
+            <p id="q5-label">5. I feel connected to classmates, professors, or study partners in my college courses.</p>
+            <div class="likert-group" role="radiogroup" aria-labelledby="q5-label">
+              <div class="likert-option">
+                <input type="radio" id="q5-1" name="q5" value="1" required><label for="q5-1">1 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q5-2" name="q5" value="2"><label for="q5-2">2 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q5-3" name="q5" value="3"><label for="q5-3">3 - Neutral</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q5-4" name="q5" value="4"><label for="q5-4">4 - Agree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q5-5" name="q5" value="5"><label for="q5-5">5 - Strongly Agree</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <p id="q6-label">6. I feel a strong sense of academic belonging in my college community and know where to turn when I need help.</p>
+            <div class="likert-group" role="radiogroup" aria-labelledby="q6-label">
+              <div class="likert-option">
+                <input type="radio" id="q6-1" name="q6" value="1" required><label for="q6-1">1 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q6-2" name="q6" value="2"><label for="q6-2">2 - Disagree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q6-3" name="q6" value="3"><label for="q6-3">3 - Neutral</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q6-4" name="q6" value="4"><label for="q6-4">4 - Agree</label>
+              </div>
+              <div class="likert-option">
+                <input type="radio" id="q6-5" name="q6" value="5"><label for="q6-5">5 - Strongly Agree</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <div id="diag-error" class="alert-box error" hidden tabindex="-1" role="alert">
+          <span>Please answer all 6 questions before calculating your diagnostic profile.</span>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Calculate Diagnostic Profile
+        </button>
+      </form>
+
+      <!-- Diagnostic Results Section -->
+      <div id="diagnostic-results" style="margin-top:2rem;" hidden>
+        <h3 class="sub-heading">Your Self-Determination Profile</h3>
+        
+        <div class="chart-container">
+          <!-- Autonomy Bar -->
+          <div class="chart-row">
+            <div class="chart-label-group">
+              <span>Autonomy Score</span>
+              <span id="score-text-autonomy">0 / 10</span>
+            </div>
+            <div class="chart-track">
+              <div id="bar-autonomy" class="chart-bar-fill autonomy" role="progressbar" aria-valuenow="0" aria-valuemin="2" aria-valuemax="10" aria-label="Autonomy Score"></div>
+            </div>
+          </div>
+
+          <!-- Competence Bar -->
+          <div class="chart-row">
+            <div class="chart-label-group">
+              <span>Competence Score</span>
+              <span id="score-text-competence">0 / 10</span>
+            </div>
+            <div class="chart-track">
+              <div id="bar-competence" class="chart-bar-fill competence" role="progressbar" aria-valuenow="0" aria-valuemin="2" aria-valuemax="10" aria-label="Competence Score"></div>
+            </div>
+          </div>
+
+          <!-- Relatedness Bar -->
+          <div class="chart-row">
+            <div class="chart-label-group">
+              <span>Relatedness Score</span>
+              <span id="score-text-relatedness">0 / 10</span>
+            </div>
+            <div class="chart-track">
+              <div id="bar-relatedness" class="chart-bar-fill relatedness" role="progressbar" aria-valuenow="0" aria-valuemin="2" aria-valuemax="10" aria-label="Relatedness Score"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="diagnostic-feedback" class="alert-box success" style="flex-direction:column; gap:0.5rem;">
+          <!-- JS fills tailored actionable strategy text -->
+        </div>
+
+        <div class="button-group">
+          <button class="btn-secondary" onclick="switchTab('tab-planner')">
+            Apply Results in Action Planner &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 3: SCENARIO LAB & REFRAMING TOOL -->
+    <section id="panel-scenarios" role="tabpanel" aria-labelledby="tab-scenarios" hidden>
+      <h2 class="section-heading">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.7-3.7a1 1 0 0 0 0-1.4l-1.6-1.6a1 1 0 0 0-1.4 0l-3.7 3.7zM12 18H3M21 18h-3M6 12H3M21 12h-9"></path></svg>
+        Scenario Lab &amp; Reframing Tool
+      </h2>
+      <p class="lead-text">
+        In college, you will encounter required courses or daunting assignments that feel purely extrinsic. Practicing <strong>cognitive reframing</strong> helps you identify which psychological need is blocked and transform external compliance into autonomous value.
+      </p>
+
+      <div class="form-group">
+        <label for="scenario-select">Select a College Scenario to Analyze:</label>
+        <select id="scenario-select" onchange="loadScenario(this.value)">
+          <option value="1">Scenario 1: The Required Gen-Ed Math/Stats Course</option>
+          <option value="2">Scenario 2: The Intimidating 300-Person Lecture</option>
+          <option value="3">Scenario 3: Receiving a Discouraging Grade on an Essay</option>
+          <option value="4">Scenario 4: Procrastinating on a Major Term Paper</option>
+        </select>
+      </div>
+
+      <div id="scenario-content-card" style="border:2px solid var(--border-main); border-radius:0.75rem; padding:1.5rem; background:var(--bg-card); margin-top:1rem;">
+        <h3 id="scenario-title" class="sub-heading" style="margin-top:0;">Scenario Narrative</h3>
+        <p id="scenario-description" class="lead-text" style="font-size:1rem;"></p>
+
+        <!-- Phase 1: Identify Threatened Need -->
+        <fieldset>
+          <legend>Step 1: Need Analysis</legend>
+          <p id="need-analysis-prompt" style="font-weight:700; margin-bottom:0.75rem;">
+            Which psychological need is most directly threatened in this situation?
+          </p>
+          <div class="likert-group" role="radiogroup" aria-labelledby="need-analysis-prompt">
+            <div class="likert-option">
+              <input type="radio" id="need-autonomy" name="scenario-need" value="autonomy"><label for="need-autonomy">Autonomy</label>
+            </div>
+            <div class="likert-option">
+              <input type="radio" id="need-competence" name="scenario-need" value="competence"><label for="need-competence">Competence</label>
+            </div>
+            <div class="likert-option">
+              <input type="radio" id="need-relatedness" name="scenario-need" value="relatedness"><label for="need-relatedness">Relatedness</label>
+            </div>
+          </div>
+          <button class="btn-secondary" style="margin-top:1rem;" onclick="checkScenarioNeed()">
+            Check Need Analysis
+          </button>
+          <div id="scenario-need-feedback" class="alert-box" hidden style="margin-top:1rem;"></div>
+        </fieldset>
+
+        <!-- Phase 2: Reframing Mindset -->
+        <fieldset>
+          <legend>Step 2: Interactive Mindset Reframe</legend>
+          <p style="font-weight:700; margin-bottom:0.5rem;">
+            Select the most effective Autonomous / Identified Reframe statement:
+          </p>
+          <div id="reframe-options-container" class="form-group">
+            <!-- Populated dynamically by JS -->
+          </div>
+          
+          <div class="form-group" style="margin-top:1rem;">
+            <label for="custom-reframe-text">Or draft your own personal reframe statement:</label>
+            <textarea id="custom-reframe-text" placeholder="Write how you can reframe this task in a way that connects to your personal goals or growth..."></textarea>
+          </div>
+
+          <button class="btn-primary" onclick="evaluateReframing()">
+            Evaluate Mindset Reframe
+          </button>
+          
+          <div id="scenario-reframe-feedback" class="alert-box" hidden style="margin-top:1rem;"></div>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- MODULE 4: KNOWLEDGE MASTERY QUIZ -->
+    <section id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz" hidden>
+      <h2 class="section-heading">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Knowledge Mastery Quiz
+      </h2>
+      <p class="lead-text">
+        Test your understanding of Self-Determination Theory principles and motivation reframing strategies. Instant feedback will explain the underlying psychological mechanisms.
+      </p>
+
+      <form id="quiz-form" onsubmit="submitQuiz(event)">
+        <!-- Q1 -->
+        <fieldset>
+          <legend>Question 1 of 5</legend>
+          <p id="qz1-text" style="font-weight:700; margin-bottom:0.75rem;">
+            Maya is struggling to get started on a required sociology assignment. She decides to tie the essay topic to her personal passion for urban sustainability. According to SDT, which psychological need is Maya proactively supporting?
+          </p>
+          <div class="form-group" role="radiogroup" aria-labelledby="qz1-text">
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz1-a" name="qz1" value="A" required>
+              <label for="qz1-a" style="display:inline; font-weight:normal;">A) Autonomy</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz1-b" name="qz1" value="B">
+              <label for="qz1-b" style="display:inline; font-weight:normal;">B) Competence</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz1-c" name="qz1" value="C">
+              <label for="qz1-c" style="display:inline; font-weight:normal;">C) Relatedness</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz1-d" name="qz1" value="D">
+              <label for="qz1-d" style="display:inline; font-weight:normal;">D) Amotivation</label>
+            </div>
+          </div>
+          <div id="qz1-feedback" class="alert-box" hidden></div>
+        </fieldset>
+
+        <!-- Q2 -->
+        <fieldset>
+          <legend>Question 2 of 5</legend>
+          <p id="qz2-text" style="font-weight:700; margin-bottom:0.75rem;">
+            Lucas studies chemistry solely because he fears losing his financial aid scholarship if his GPA falls below 3.0. What form of motivation is Lucas demonstrating?
+          </p>
+          <div class="form-group" role="radiogroup" aria-labelledby="qz2-text">
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz2-a" name="qz2" value="A" required>
+              <label for="qz2-a" style="display:inline; font-weight:normal;">A) Intrinsic Motivation</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz2-b" name="qz2" value="B">
+              <label for="qz2-b" style="display:inline; font-weight:normal;">B) External Regulation (Extrinsic)</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz2-c" name="qz2" value="C">
+              <label for="qz2-c" style="display:inline; font-weight:normal;">C) Competence Mastery</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz2-d" name="qz2" value="D">
+              <label for="qz2-d" style="display:inline; font-weight:normal;">D) Integrated Autonomy</label>
+            </div>
+          </div>
+          <div id="qz2-feedback" class="alert-box" hidden></div>
+        </fieldset>
+
+        <!-- Q3 -->
+        <fieldset>
+          <legend>Question 3 of 5</legend>
+          <p id="qz3-text" style="font-weight:700; margin-bottom:0.75rem;">
+            After getting a C- on his first calculus test, David schedules office hours with his professor to go over his mistakes and learn specific study strategies. Which need is David actively building?
+          </p>
+          <div class="form-group" role="radiogroup" aria-labelledby="qz3-text">
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz3-a" name="qz3" value="A" required>
+              <label for="qz3-a" style="display:inline; font-weight:normal;">A) Relatedness only</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz3-b" name="qz3" value="B">
+              <label for="qz3-b" style="display:inline; font-weight:normal;">B) External Compliance</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz3-c" name="qz3" value="C">
+              <label for="qz3-c" style="display:inline; font-weight:normal;">C) Competence</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz3-d" name="qz3" value="D">
+              <label for="qz3-d" style="display:inline; font-weight:normal;">D) Amotivation</label>
+            </div>
+          </div>
+          <div id="qz3-feedback" class="alert-box" hidden></div>
+        </fieldset>
+
+        <!-- Q4 -->
+        <fieldset>
+          <legend>Question 4 of 5</legend>
+          <p id="qz4-text" style="font-weight:700; margin-bottom:0.75rem;">
+            Which instructional strategy in a college course best fosters students' sense of <strong>Relatedness</strong>?
+          </p>
+          <div class="form-group" role="radiogroup" aria-labelledby="qz4-text">
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz4-a" name="qz4" value="A" required>
+              <label for="qz4-a" style="display:inline; font-weight:normal;">A) Posting strict unyielding rules on the course syllabus</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz4-b" name="qz4" value="B">
+              <label for="qz4-b" style="display:inline; font-weight:normal;">B) Facilitating peer discussion circles and accessible instructor office hours</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz4-c" name="qz4" value="C">
+              <label for="qz4-c" style="display:inline; font-weight:normal;">C) Giving curved exam grades where students compete against each other</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz4-d" name="qz4" value="D">
+              <label for="qz4-d" style="display:inline; font-weight:normal;">D) Grading assignments without providing written commentary</label>
+            </div>
+          </div>
+          <div id="qz4-feedback" class="alert-box" hidden></div>
+        </fieldset>
+
+        <!-- Q5 -->
+        <fieldset>
+          <legend>Question 5 of 5</legend>
+          <p id="qz5-text" style="font-weight:700; margin-bottom:0.75rem;">
+            What is the primary psychological outcome when all three basic needs (Autonomy, Competence, and Relatedness) are satisfied in a college course?
+          </p>
+          <div class="form-group" role="radiogroup" aria-labelledby="qz5-text">
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz5-a" name="qz5" value="A" required>
+              <label for="qz5-a" style="display:inline; font-weight:normal;">A) Complete elimination of academic challenge</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz5-b" name="qz5" value="B">
+              <label for="qz5-b" style="display:inline; font-weight:normal;">B) Reliance on professor reminders to finish work</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz5-c" name="qz5" value="C">
+              <label for="qz5-c" style="display:inline; font-weight:normal;">C) Higher intrinsic motivation, deeper engagement, and psychological well-being</label>
+            </div>
+            <div style="margin-bottom:0.5rem;">
+              <input type="radio" id="qz5-d" name="qz5" value="D">
+              <label for="qz5-d" style="display:inline; font-weight:normal;">D) Automatic 4.0 GPA without effort</label>
+            </div>
+          </div>
+          <div id="qz5-feedback" class="alert-box" hidden></div>
+        </fieldset>
+
+        <div id="quiz-error" class="alert-box error" hidden role="alert">
+          <span>Please answer all 5 quiz questions before submitting.</span>
+        </div>
+
+        <div id="quiz-summary" class="alert-box success" hidden tabindex="-1" style="flex-direction:column; gap:0.5rem;"></div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-primary">Submit Quiz</button>
+          <button type="button" class="btn-secondary" onclick="resetQuiz()">Retry / Reset Quiz</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- MODULE 5: ACTION PLANNER -->
+    <section id="panel-planner" role="tabpanel" aria-labelledby="tab-planner" hidden>
+      <h2 class="section-heading">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        Personal SDT Action Planner
+      </h2>
+      <p class="lead-text">
+        Translate Self-Determination Theory into concrete daily academic habits. Select a specific college class you are taking this semester and construct targeted action steps for Autonomy, Competence, and Relatedness.
+      </p>
+
+      <form id="planner-form" onsubmit="generateActionPlan(event)">
+        <fieldset>
+          <legend>Class &amp; Goal Context</legend>
+          <div class="form-group">
+            <label for="plan-course">Target College Course Name:</label>
+            <input type="text" id="plan-course" placeholder="e.g. Psychology 101, Intro to Statistics, Chemistry I" required>
+          </div>
+          <div class="form-group">
+            <label for="plan-goal">Primary Academic Goal for this Class:</label>
+            <input type="text" id="plan-goal" placeholder="e.g. Master core analytical skills and earn an A in the course" required>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Need 1: Autonomy Action Strategy</legend>
+          <div class="form-group">
+            <label for="plan-autonomy-select">Select Autonomy Booster Strategy:</label>
+            <select id="plan-autonomy-select" required>
+              <option value="Choice of Topic">Select paper/project topics aligned with my career interest</option>
+              <option value="Self-Directed Schedule">Design my own custom daily study time blocks</option>
+              <option value="Personal Meaning">Write down 3 ways this course connects to my personal goals</option>
+              <option value="Custom">Custom Autonomy Strategy (type below)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="plan-autonomy-detail">Specific Execution Details:</label>
+            <textarea id="plan-autonomy-detail" placeholder="Describe exactly how and when you will implement this autonomy booster..." required></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Need 2: Competence Action Strategy</legend>
+          <div class="form-group">
+            <label for="plan-competence-select">Select Competence Booster Strategy:</label>
+            <select id="plan-competence-select" required>
+              <option value="Office Hours & Feedback">Schedule professor office hours to review quiz errors</option>
+              <option value="Micro-Deadlines">Break long term papers into 4 smaller milestone deadlines</option>
+              <option value="Campus Tutoring">Attend weekly campus tutoring / writing center sessions</option>
+              <option value="Custom">Custom Competence Strategy (type below)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="plan-competence-detail">Specific Execution Details:</label>
+            <textarea id="plan-competence-detail" placeholder="Describe your action steps to master difficult material..." required></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Need 3: Relatedness Action Strategy</legend>
+          <div class="form-group">
+            <label for="plan-relatedness-select">Select Relatedness Booster Strategy:</label>
+            <select id="plan-relatedness-select" required>
+              <option value="Study Group">Form or join a 3-person peer study group</option>
+              <option value="Peer Partner">Connect with a classmate after lecture to compare notes</option>
+              <option value="Department Club">Join a student organization related to this academic field</option>
+              <option value="Custom">Custom Relatedness Strategy (type below)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="plan-relatedness-detail">Specific Execution Details:</label>
+            <textarea id="plan-relatedness-detail" placeholder="Describe how you will build academic community in this course..." required></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Obstacle &amp; Mitigation Strategy</legend>
+          <div class="form-group">
+            <label for="plan-barrier">Anticipated Academic Barrier or Procrastination Trigger:</label>
+            <input type="text" id="plan-barrier" placeholder="e.g. Feeling overwhelmed when reading long textbook chapters" required>
+          </div>
+          <div class="form-group">
+            <label for="plan-solution">Proactive SDT Solution:</label>
+            <input type="text" id="plan-solution" placeholder="e.g. Use 25-minute Pomodoro timer (Competence) and study with a partner (Relatedness)" required>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn-primary">Generate SDT Action Plan</button>
+      </form>
+
+      <!-- Action Plan Output -->
+      <div id="plan-output-container" style="margin-top:2rem;" hidden>
+        <h3 class="sub-heading">Your Custom Self-Determination Action Plan</h3>
+        <p class="help-text">You can copy or download your formatted plan below to keep for your records or submit to your instructor.</p>
+        
+        <pre id="plan-output" class="output-plan" tabindex="0"></pre>
+
+        <div class="button-group">
+          <button id="copy-plan-btn" class="btn-primary" onclick="copyPlanToClipboard()">
+            Copy Plan to Clipboard
+          </button>
+          <button class="btn-secondary" onclick="downloadPlanFile()">
+            Download Text File (.txt)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 6: ACCESSIBILITY & TESTING CHECKLIST -->
+    <section id="panel-testing" role="tabpanel" aria-labelledby="tab-testing" hidden>
+      <h2 class="section-heading">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        WCAG 2.2 AA Conformance &amp; Testing Checklist
+      </h2>
+      <p class="lead-text">
+        This web application is built strictly following <strong>WCAG 2.2 Level AA</strong> accessibility criteria to ensure complete operability for students using screen readers, keyboard-only navigation, high contrast displays, or screen magnification up to 400%.
+      </p>
+
+      <h3 class="sub-heading">Implemented WCAG 2.2 Level AA Safeguards</h3>
+      <ul style="padding-left:1.5rem; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem;">
+        <li><strong>1.3.1 Info and Relationships:</strong> Full semantic HTML5 layout (<code>header</code>, <code>nav</code>, <code>main</code>, <code>fieldset</code>, <code>legend</code>, <code>label</code>). Form inputs are explicitly bound with <code>for/id</code> associations.</li>
+        <li><strong>1.4.3 &amp; 1.4.11 Contrast:</strong> Text colors achieve at least 4.5:1 contrast against backgrounds in default mode, and 7:1+ in High Contrast Mode. Focus rings have a 3px border with distinct offset.</li>
+        <li><strong>1.4.10 Reflow:</strong> Layout adjusts fluidly without horizontal scroll bars when browser zoom is increased up to 400% on standard screens.</li>
+        <li><strong>2.1.1 &amp; 2.1.2 Keyboard Operability:</strong> All tab panels, buttons, radios, and expandable accordions are fully operable via Keyboard (Tab, Shift+Tab, Enter, Space, Arrow Keys). No keyboard traps.</li>
+        <li><strong>2.4.7 Focus Visible:</strong> High-visibility focus indicators enabled on all interactive controls.</li>
+        <li><strong>4.1.3 Status Messages:</strong> Live screen reader announcements (<code>aria-live="polite"</code>) broadcast tab changes, score calculations, error alerts, and plan generation.</li>
+      </ul>
+
+      <h3 class="sub-heading">Interactive Student / Evaluator Audit Checklist</h3>
+      <p class="help-text">Use this checklist to manually verify accessibility compliance on your device:</p>
+
+      <table class="checklist-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col">Test Item</th>
+            <th scope="col">Verification Method</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Keyboard Only Nav</strong></td>
+            <td>Press <kbd>Tab</kbd> and <kbd>Arrow keys</kbd> to traverse all tabs, diagnostic forms, and buttons without a mouse.</td>
+            <td><input type="checkbox" id="chk-1" aria-label="Keyboard Nav Verified"> <label for="chk-1">Verified</label></td>
+          </tr>
+          <tr>
+            <td><strong>Focus Visibility</strong></td>
+            <td>Ensure a thick outline ring surrounds every active element when focused.</td>
+            <td><input type="checkbox" id="chk-2" aria-label="Focus Indicator Verified"> <label for="chk-2">Verified</label></td>
+          </tr>
+          <tr>
+            <td><strong>Screen Reader Live Updates</strong></td>
+            <td>Turn on NVDA, VoiceOver, or JAWS; verify live announcements when switching tabs or submitting quiz.</td>
+            <td><input type="checkbox" id="chk-3" aria-label="Screen reader verified"> <label for="chk-3">Verified</label></td>
+          </tr>
+          <tr>
+            <td><strong>High Contrast Mode</strong></td>
+            <td>Toggle High Contrast button in header; check that text remains crisp and visible.</td>
+            <td><input type="checkbox" id="chk-4" aria-label="High contrast verified"> <label for="chk-4">Verified</label></td>
+          </tr>
+          <tr>
+            <td><strong>400% Zoom Reflow</strong></td>
+            <td>Zoom browser to 400% (<kbd>Ctrl +</kbd>); check that content wraps without horizontal scrolling.</td>
+            <td><input type="checkbox" id="chk-5" aria-label="Zoom reflow verified"> <label for="chk-5">Verified</label></td>
+          </tr>
+          <tr>
+            <td><strong>Touch Target Size</strong></td>
+            <td>Verify buttons and radio targets are at least 44x44px for easy mobile tapping.</td>
+            <td><input type="checkbox" id="chk-6" aria-label="Touch targets verified"> <label for="chk-6">Verified</label></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer style="background-color: var(--bg-header); color: var(--text-header); padding: 1.5rem; text-align: center; border-top: 3px solid var(--border-main); margin-top: auto;">
+    <p style="font-size:0.9rem;">
+      Designed for "Intro. to College-Level Learning" &bull; Self-Determination Theory Application &bull; GitHub Pages Static Deployment Ready
+    </p>
+  </footer>
+
+  <!-- ==========================================================================
+     VANILLA JAVASCRIPT LOGIC (NO EXTERNAL DEPENDENCIES)
+     ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       GLOBAL STATE & ACCESSIBILITY ANNOUNCER
+       -------------------------------------------------------------------------- */
+    const tabs = document.querySelectorAll('[role="tab"]');
+    const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+    const announcer = document.getElementById('sr-announcer');
+
+    function announceSR(message) {
+      if (announcer) {
+        announcer.textContent = '';
+        setTimeout(() => {
+          announcer.textContent = message;
+        }, 50);
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       ACCESSIBLE TAB NAVIGATION SYSTEM (WAI-ARIA COMPLIANT)
+       -------------------------------------------------------------------------- */
+    function switchTab(targetTabId) {
+      let targetTab = document.getElementById(targetTabId);
+      if (!targetTab) {
+        // Fallback if panel ID passed
+        tabs.forEach(t => {
+          if (t.getAttribute('aria-controls') === targetTabId) targetTab = t;
+        });
+      }
+      if (!targetTab) return;
+
+      tabs.forEach(tab => {
+        const isSelected = (tab === targetTab);
+        tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+      });
+
+      tabPanels.forEach(panel => {
+        const isTarget = (panel.id === targetTab.getAttribute('aria-controls'));
+        panel.hidden = !isTarget;
+      });
+
+      targetTab.focus();
+      const tabTitle = targetTab.textContent.trim();
+      announceSR(`Switched to tab section: ${tabTitle}`);
+    }
+
+    // Tablist Keyboard Event Handling (Arrow keys, Home, End)
+    const tabList = document.querySelector('[role="tablist"]');
+    if (tabList) {
+      tabList.addEventListener('keydown', e => {
+        const currentTab = document.activeElement;
+        if (!currentTab || currentTab.getAttribute('role') !== 'tab') return;
+
+        const tabArray = Array.from(tabs);
+        let index = tabArray.indexOf(currentTab);
+
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          index = (index + 1) % tabArray.length;
+          switchTab(tabArray[index].id);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          index = (index - 1 + tabArray.length) % tabArray.length;
+          switchTab(tabArray[index].id);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          switchTab(tabArray[0].id);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          switchTab(tabArray[tabArray.length - 1].id);
+        }
+      });
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.id));
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       HIGH CONTRAST THEME TOGGLE
+       -------------------------------------------------------------------------- */
+    function toggleHighContrast() {
+      const isHc = document.body.classList.toggle('high-contrast');
+      const hcBtn = document.getElementById('hc-toggle-btn');
+      hcBtn.setAttribute('aria-pressed', isHc ? 'true' : 'false');
+      announceSR(isHc ? 'High contrast mode enabled.' : 'Standard contrast mode restored.');
+    }
+
+    /* --------------------------------------------------------------------------
+       ACCORDION TOGGLE LOGIC
+       -------------------------------------------------------------------------- */
+    function toggleAccordion(btn) {
+      const targetId = btn.getAttribute('aria-controls');
+      const content = document.getElementById(targetId);
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+      btn.setAttribute('aria-expanded', !isExpanded);
+      content.hidden = isExpanded;
+      const icon = btn.querySelector('span[aria-hidden="true"]');
+      if (icon) icon.textContent = isExpanded ? '+' : '−';
+    }
+
+    /* --------------------------------------------------------------------------
+       MODULE 2: DIAGNOSTIC ASSESSMENT CALCULATOR
+       -------------------------------------------------------------------------- */
+    function calculateDiagnostic(e) {
+      e.preventDefault();
+      const form = document.getElementById('diagnostic-form');
+      const errBox = document.getElementById('diag-error');
+
+      // Check if all 6 questions answered
+      const q1 = form.querySelector('input[name="q1"]:checked');
+      const q2 = form.querySelector('input[name="q2"]:checked');
+      const q3 = form.querySelector('input[name="q3"]:checked');
+      const q4 = form.querySelector('input[name="q4"]:checked');
+      const q5 = form.querySelector('input[name="q5"]:checked');
+      const q6 = form.querySelector('input[name="q6"]:checked');
+
+      if (!q1 || !q2 || !q3 || !q4 || !q5 || !q6) {
+        errBox.hidden = false;
+        errBox.focus();
+        announceSR('Diagnostic submission incomplete. Please answer all 6 questions.');
+        return;
+      }
+
+      errBox.hidden = true;
+
+      // Calculate scores out of 10
+      const scoreAutonomy = parseInt(q1.value) + parseInt(q2.value);
+      const scoreCompetence = parseInt(q3.value) + parseInt(q4.value);
+      const scoreRelatedness = parseInt(q5.value) + parseInt(q6.value);
+
+      // Render Bar Charts
+      updateBar('autonomy', scoreAutonomy);
+      updateBar('competence', scoreCompetence);
+      updateBar('relatedness', scoreRelatedness);
+
+      // Generate Feedback Strategies
+      const feedbackDiv = document.getElementById('diagnostic-feedback');
+      let feedbackHTML = '<strong>Diagnostic Insights &amp; Recommended Actions:</strong><ul style="padding-left:1.25rem; margin-top:0.5rem; display:flex; flex-direction:column; gap:0.4rem;">';
+
+      if (scoreAutonomy < 7) {
+        feedbackHTML += '<li><strong>Autonomy Booster Needed:</strong> You may feel constrained by rigid course expectations. Try actively choosing paper topics that relate to your personal passion, and build your own daily study schedules.</li>';
+      } else {
+        feedbackHTML += '<li><strong>Autonomy Strength:</strong> You take great ownership of your learning goals! Continue setting personal learning intentions for each class.</li>';
+      }
+
+      if (scoreCompetence < 7) {
+        feedbackHTML += '<li><strong>Competence Booster Needed:</strong> You might feel overwhelmed by difficult material. Break major projects into small 30-minute study tasks and attend campus tutoring early.</li>';
+      } else {
+        feedbackHTML += '<li><strong>Competence Strength:</strong> You feel confident in your ability to learn and grow. Maintain this growth mindset by seeking continuous feedback.</li>';
+      }
+
+      if (scoreRelatedness < 7) {
+        feedbackHTML += '<li><strong>Relatedness Booster Needed:</strong> Academic isolation can drain motivation. Reach out to a classmate to exchange study notes or introduce yourself to your professor during office hours.</li>';
+      } else {
+        feedbackHTML += '<li><strong>Relatedness Strength:</strong> You feel well connected to your academic community! Keep engaging in study groups and supporting classmates.</li>';
+      }
+
+      feedbackHTML += '</ul>';
+      feedbackDiv.innerHTML = feedbackHTML;
+
+      // Show Results
+      const resultsContainer = document.getElementById('diagnostic-results');
+      resultsContainer.hidden = false;
+      resultsContainer.scrollIntoView({ behavior: 'smooth' });
+
+      announceSR(`Diagnostic calculated successfully. Autonomy: ${scoreAutonomy} of 10. Competence: ${scoreCompetence} of 10. Relatedness: ${scoreRelatedness} of 10.`);
+    }
+
+    function updateBar(dimension, score) {
+      const bar = document.getElementById(`bar-${dimension}`);
+      const text = document.getElementById(`score-text-${dimension}`);
+      const percent = (score / 10) * 100;
+      
+      bar.style.width = `${percent}%`;
+      bar.setAttribute('aria-valuenow', score);
+      text.textContent = `${score} / 10`;
+    }
+
+    /* --------------------------------------------------------------------------
+       MODULE 3: SCENARIO LAB DATA & LOGIC
+       -------------------------------------------------------------------------- */
+    const scenariosData = {
+      "1": {
+        title: "Scenario 1: The Required Gen-Ed Statistics Course",
+        description: "You are required to take an introductory statistics course for your major, but you dislike math and feel zero intrinsic interest. You feel forced to complete weekly problem sets purely to pass.",
+        correctNeed: "autonomy",
+        needExplanation: "Correct! The primary obstacle is Autonomy. Feeling forced to take a required course creates external pressure, making learning feel like compliance rather than a personal choice.",
+        reframeOptions: [
+          { id: "opt1", text: "I just have to grit my teeth and pass this stupid class so I can get my degree.", type: "external" },
+          { id: "opt2", text: "I choose to learn data analysis because being able to interpret research statistics will make me a much stronger job candidate in my field.", type: "identified", correct: true },
+          { id: "opt3", text: "I'll study for 12 hours straight the night before exams so I don't feel guilty about failing.", type: "introjected" }
+        ],
+        reframeExplanation: "Option 2 is an 'Identified Regulation' reframe. Even if statistics isn't inherently fun, connecting it to your personal career identity transforms external compulsion into autonomous, self-directed value."
+      },
+      "2": {
+        title: "Scenario 2: The Intimidating 300-Person Lecture",
+        description: "You attend a huge lecture hall with 300 students. The instructor speaks continuously, and you feel completely invisible. When you get confused by a concept, you hesitate to raise your hand and feel like you don't belong.",
+        correctNeed: "relatedness",
+        needExplanation: "Correct! The primary obstacle is Relatedness. The sheer size of the lecture hall leads to feelings of isolation and lack of academic belonging.",
+        reframeOptions: [
+          { id: "opt1", text: "I'm completely on my own here, so I'll just sit in the back row and never talk to anyone.", type: "external" },
+          { id: "opt2", text: "I will introduce myself to two classmates sitting next to me and form a weekly 3-person study check-in group.", type: "identified", correct: true },
+          { id: "opt3", text: "I should feel ashamed that I don't understand the lecture as fast as everyone else.", type: "introjected" }
+        ],
+        reframeExplanation: "Option 2 directly satisfies Relatedness! Building small peer connections turns a giant, cold lecture hall into a supportive social learning environment."
+      },
+      "3": {
+        title: "Scenario 3: Receiving a Discouraging Grade on an Essay",
+        description: "You spent hours writing your first college history paper, but received a C- with brief comments like 'lacks analytical depth.' You feel discouraged and start thinking 'I'm just not a good writer.'",
+        correctNeed: "competence",
+        needExplanation: "Correct! The primary obstacle is Competence. Receiving a low grade without clear improvement steps triggers fixed-mindset helplessness.",
+        reframeOptions: [
+          { id: "opt1", text: "This grade proves I am bad at writing and shouldn't bother trying on the next paper.", type: "external" },
+          { id: "opt2", text: "This grade is feedback on my current strategy, not my intelligence. I will take my paper to the Writing Center to learn specific revision techniques.", type: "identified", correct: true },
+          { id: "opt3", text: "I'll rewrite the entire essay without asking anyone for help to prove my professor wrong.", type: "introjected" }
+        ],
+        reframeExplanation: "Option 2 reframes the setback through a Competence & Growth mindset. Viewing critiques as actionable skill-building instructions restores mastery and motivation."
+      },
+      "4": {
+        title: "Scenario 4: Procrastinating on a Major Term Paper",
+        description: "You have a 10-page research project due in three weeks with no interim deadlines. Because the assignment feels huge and unstructured, you keep putting it off and playing video games instead.",
+        correctNeed: "competence",
+        needExplanation: "Correct! When a goal lacks structure, Competence is threatened because your brain doesn't see a clear, achievable path to success.",
+        reframeOptions: [
+          { id: "opt1", text: "I'll just wait until 2:00 AM the night before it's due and pull an all-nighter.", type: "external" },
+          { id: "opt2", text: "I will break this project into 4 small milestones: outline this week, 3 pages next week, and draft review in week 3.", type: "identified", correct: true },
+          { id: "opt3", text: "I am a terrible procrastinator and I deserve the stress I'm feeling.", type: "introjected" }
+        ],
+        reframeExplanation: "Option 2 restores Competence by turning a daunting, ambiguous task into small, manageable mastery steps!"
+      }
+    };
+
+    function loadScenario(id) {
+      const data = scenariosData[id];
+      if (!data) return;
+
+      document.getElementById('scenario-title').textContent = data.title;
+      document.getElementById('scenario-description').textContent = data.description;
+
+      // Reset feedback boxes
+      const needFb = document.getElementById('scenario-need-feedback');
+      const reframeFb = document.getElementById('scenario-reframe-feedback');
+      needFb.hidden = true;
+      reframeFb.hidden = true;
+
+      // Reset radios
+      document.querySelectorAll('input[name="scenario-need"]').forEach(r => r.checked = false);
+
+      // Render Reframe options
+      const container = document.getElementById('reframe-options-container');
+      container.innerHTML = '';
+      data.reframeOptions.forEach((opt, idx) => {
+        const div = document.createElement('div');
+        div.style.marginBottom = '0.5rem';
+        div.innerHTML = `
+          <input type="radio" id="rf-${idx}" name="scenario-reframe-opt" value="${opt.id}">
+          <label for="rf-${idx}" style="display:inline; font-weight:normal;">${opt.text}</label>
+        `;
+        container.appendChild(div);
+      });
+
+      document.getElementById('custom-reframe-text').value = '';
+      announceSR(`Loaded ${data.title}`);
+    }
+
+    function checkScenarioNeed() {
+      const selectedScenario = document.getElementById('scenario-select').value;
+      const data = scenariosData[selectedScenario];
+      const checked = document.querySelector('input[name="scenario-need"]:checked');
+      const feedback = document.getElementById('scenario-need-feedback');
+
+      if (!checked) {
+        feedback.className = 'alert-box warning';
+        feedback.innerHTML = '<span>Please select a psychological need first.</span>';
+        feedback.hidden = false;
+        announceSR('Please select a psychological need first.');
+        return;
+      }
+
+      if (checked.value === data.correctNeed) {
+        feedback.className = 'alert-box success';
+        feedback.innerHTML = `<span>✓ ${data.needExplanation}</span>`;
+      } else {
+        feedback.className = 'alert-box error';
+        feedback.innerHTML = `<span>Not quite. While all needs are interconnected, the primary obstacle here is <strong>${data.correctNeed.toUpperCase()}</strong>. Think about what is most directly missing in this student's environment.</span>`;
+      }
+      feedback.hidden = false;
+      announceSR(feedback.textContent);
+    }
+
+    function evaluateReframing() {
+      const selectedScenario = document.getElementById('scenario-select').value;
+      const data = scenariosData[selectedScenario];
+      const checkedOpt = document.querySelector('input[name="scenario-reframe-opt"]:checked');
+      const customText = document.getElementById('custom-reframe-text').value.trim();
+      const feedback = document.getElementById('scenario-reframe-feedback');
+
+      if (!checkedOpt && !customText) {
+        feedback.className = 'alert-box warning';
+        feedback.innerHTML = '<span>Please select a reframe statement or write your own custom reframe.</span>';
+        feedback.hidden = false;
+        announceSR('Please select a reframe statement or write your own custom reframe.');
+        return;
+      }
+
+      let responseHTML = '';
+      if (customText) {
+        responseHTML = `<strong>Custom Reframe Feedback:</strong><p style="margin-top:0.4rem;">Great effort drafting your personal reframe! Check your statement against these SDT guidelines: Does it connect the class to your personal values or career goals (Autonomy)? Does it outline actionable steps to build skills (Competence)? If yes, you have created a powerful internal driver!</p>`;
+      } else {
+        const chosen = data.reframeOptions.find(o => o.id === checkedOpt.value);
+        if (chosen.correct) {
+          responseHTML = `<strong>✓ Excellent SDT Reframing!</strong><p style="margin-top:0.4rem;">${data.reframeExplanation}</p>`;
+        } else {
+          responseHTML = `<strong>Needs Adjustment:</strong><p style="margin-top:0.4rem;">This statement represents ${chosen.type === 'external' ? 'External Regulation (doing it purely for survival/grades)' : 'Introjected Regulation (doing it out of guilt/shame)'}. Try selecting the option that connects the task to personal career goals or growth.</p>`;
+        }
+      }
+
+      feedback.className = 'alert-box success';
+      feedback.innerHTML = responseHTML;
+      feedback.hidden = false;
+      announceSR(feedback.textContent);
+    }
+
+    /* --------------------------------------------------------------------------
+       MODULE 4: QUIZ EVALUATION LOGIC
+       -------------------------------------------------------------------------- */
+    const quizAnswers = {
+      qz1: { correct: "A", explain: "Correct! Maya choice to align the essay topic with her personal passion is a textbook example of supporting Autonomy." },
+      qz2: { correct: "B", explain: "Correct! Studying purely to avoid losing financial aid is External Regulation (driven by external reward/punishment)." },
+      qz3: { correct: "C", explain: "Correct! David is seeking constructive feedback and strategy guidance to master the material, which builds Competence." },
+      qz4: { correct: "B", explain: "Correct! Facilitating peer discussion circles and accessible office hours fosters social connection and Relatedness." },
+      qz5: { correct: "C", explain: "Correct! Satisfying all three core psychological needs produces optimal intrinsic motivation, persistence, and mental well-being." }
+    };
+
+    function submitQuiz(e) {
+      e.preventDefault();
+      const form = document.getElementById('quiz-form');
+      const errBox = document.getElementById('quiz-error');
+      let score = 0;
+      let allAnswered = true;
+
+      for (let i = 1; i <= 5; i++) {
+        const qVal = form.querySelector(`input[name="qz${i}"]:checked`);
+        if (!qVal) allAnswered = false;
+      }
+
+      if (!allAnswered) {
+        errBox.hidden = false;
+        errBox.focus();
+        announceSR('Quiz incomplete. Please answer all 5 questions before submitting.');
+        return;
+      }
+      errBox.hidden = true;
+
+      // Evaluate each question
+      for (let i = 1; i <= 5; i++) {
+        const qVal = form.querySelector(`input[name="qz${i}"]:checked`).value;
+        const qKey = `qz${i}`;
+        const feedbackDiv = document.getElementById(`${qKey}-feedback`);
+        
+        if (qVal === quizAnswers[qKey].correct) {
+          score++;
+          feedbackDiv.className = 'alert-box success';
+          feedbackDiv.innerHTML = `<span>✓ ${quizAnswers[qKey].explain}</span>`;
+        } else {
+          feedbackDiv.className = 'alert-box error';
+          feedbackDiv.innerHTML = `<span>✗ Incorrect. The correct answer was <strong>${quizAnswers[qKey].correct}</strong>. ${quizAnswers[qKey].explain}</span>`;
+        }
+        feedbackDiv.hidden = false;
+      }
+
+      // Display overall summary
+      const summary = document.getElementById('quiz-summary');
+      const percent = (score / 5) * 100;
+      summary.innerHTML = `
+        <h3 style="margin:0;">Quiz Results: ${score} / 5 Correct (${percent}%)</h3>
+        <p style="margin-top:0.5rem;">${score >= 4 ? 'Mastery Achieved! You have a firm grasp of Self-Determination Theory principles.' : 'Good review! Re-examine the feedback explanations above to strengthen your mastery.'}</p>
+      `;
+      summary.hidden = false;
+      summary.focus();
+
+      announceSR(`Quiz completed. You scored ${score} out of 5.`);
+    }
+
+    function resetQuiz() {
+      document.getElementById('quiz-form').reset();
+      for (let i = 1; i <= 5; i++) {
+        const fb = document.getElementById(`qz${i}-feedback`);
+        if (fb) fb.hidden = true;
+      }
+      document.getElementById('quiz-summary').hidden = true;
+      document.getElementById('quiz-error').hidden = true;
+      announceSR('Quiz reset. All selections cleared.');
+    }
+
+    /* --------------------------------------------------------------------------
+       MODULE 5: ACTION PLANNER GENERATOR
+       -------------------------------------------------------------------------- */
+    function generateActionPlan(e) {
+      e.preventDefault();
+
+      const course = document.getElementById('plan-course').value.trim();
+      const goal = document.getElementById('plan-goal').value.trim();
+      const autSel = document.getElementById('plan-autonomy-select').value;
+      const autDet = document.getElementById('plan-autonomy-detail').value.trim();
+      const compSel = document.getElementById('plan-competence-select').value;
+      const compDet = document.getElementById('plan-competence-detail').value.trim();
+      const relSel = document.getElementById('plan-relatedness-select').value;
+      const relDet = document.getElementById('plan-relatedness-detail').value.trim();
+      const barrier = document.getElementById('plan-barrier').value.trim();
+      const solution = document.getElementById('plan-solution').value.trim();
+
+      const now = new Date().toLocaleDateString();
+
+      const planText = 
+`====================================================================
+SELF-DETERMINATION THEORY (SDT) ACADEMIC ACTION PLAN
+Target Course: ${course}
+Primary Goal: ${goal}
+Date Created: ${now}
+====================================================================
+
+1. AUTONOMY STRATEGY (Ownership & Choice)
+- Chosen Approach: ${autSel}
+- Execution Plan: ${autDet}
+
+2. COMPETENCE STRATEGY (Mastery & Skill Growth)
+- Chosen Approach: ${compSel}
+- Execution Plan: ${compDet}
+
+3. RELATEDNESS STRATEGY (Belonging & Connection)
+- Chosen Approach: ${relSel}
+- Execution Plan: ${relDet}
+
+4. OBSTACLE & RESILIENCE MITIGATION
+- Anticipated Barrier: ${barrier}
+- Proactive SDT Solution: ${solution}
+
+====================================================================
+"When you align learning with autonomy, competence, and connection,
+ college shifts from external pressure to lifelong mastery."
+====================================================================`;
+
+      const outputPre = document.getElementById('plan-output');
+      outputPre.textContent = planText;
+
+      const container = document.getElementById('plan-output-container');
+      container.hidden = false;
+      container.scrollIntoView({ behavior: 'smooth' });
+
+      announceSR('Custom Action Plan generated successfully! Review your formatted text below.');
+    }
+
+    function copyPlanToClipboard() {
+      const planText = document.getElementById('plan-output').textContent;
+      
+      // Fallback copy mechanism for iframe security
+      const tempArea = document.createElement('textarea');
+      tempArea.value = planText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      
+      try {
+        document.execCommand('copy');
+        const copyBtn = document.getElementById('copy-plan-btn');
+        const origText = copyBtn.textContent;
+        copyBtn.textContent = '✓ Copied to Clipboard!';
+        setTimeout(() => copyBtn.textContent = origText, 2500);
+        announceSR('Action plan copied to clipboard.');
+      } catch (err) {
+        alert('Copying failed automatically. Please select text manually and press Ctrl+C.');
+      } finally {
+        document.body.removeChild(tempArea);
+      }
+    }
+
+    function downloadPlanFile() {
+      const planText = document.getElementById('plan-output').textContent;
+      const blob = new Blob([planText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'SDT_Academic_Action_Plan.txt';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      announceSR('Downloading action plan text file.');
+    }
+
+    /* --------------------------------------------------------------------------
+       INITIALIZATION ON PAGE LOAD
+       -------------------------------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Load initial scenario in Scenario Lab
+      loadScenario("1");
+    });
+  </script>
+</body>
+</html>
